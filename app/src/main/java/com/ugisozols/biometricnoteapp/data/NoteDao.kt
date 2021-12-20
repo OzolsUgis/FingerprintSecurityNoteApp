@@ -6,16 +6,16 @@ import com.ugisozols.biometricnoteapp.data.entities.Note
 @Dao
 interface NoteDao {
 
-    @Query("SELECT * FROM Note")
-    fun getAll() : List<Note>
+    @Query("SELECT * FROM notes")
+    fun getAllNotes() : List<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note : Note)
 
-    @Delete
-    suspend fun deleteNoteById(id : String)
+    @Query("DELETE FROM notes WHERE id =:noteId")
+    suspend fun deleteNoteById(noteId : String)
 
-    @Query("SELECT * FROM Note WHERE id =:noteId")
+    @Query("SELECT * FROM notes WHERE id =:noteId")
     fun getNoteById(noteId : String) : Note
 
 }
