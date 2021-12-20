@@ -1,4 +1,4 @@
-package com.ugisozols.biometricnoteapp
+package com.ugisozols.biometricnoteapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +8,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.ugisozols.biometricnoteapp.ui.theme.BiometricNoteAppTheme
+import com.ugisozols.biometricnoteapp.presentation.ui.theme.BiometricNoteAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -1,4 +1,4 @@
-package com.ugisozols.biometricnoteapp.ui.theme
+package com.ugisozols.biometricnoteapp.presentation.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
