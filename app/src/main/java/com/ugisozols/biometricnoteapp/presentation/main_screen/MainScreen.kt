@@ -1,5 +1,7 @@
 package com.ugisozols.biometricnoteapp.presentation.main_screen
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,25 +26,30 @@ import com.ugisozols.biometricnoteapp.data.entities.Note
 import com.ugisozols.biometricnoteapp.util.Constants.FAB_TEXT
 
 
+
+
+@RequiresApi(Build.VERSION_CODES.R)
 @Composable
 fun MainScreen(
     viewModel: MainScreenViewModel = hiltViewModel()
 ) {
 
+    val securityPassed = viewModel.hasFingerprintSecurityPassed
     val notes = viewModel.allNotes.collectAsState(initial = emptyList()).value
-
-    FloatingAddButton(onButtonClick = { viewModel.onDialogIsOpenChange(true) }, viewModel)
-    ListOfNotes(
-        notes,
-        viewModel,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    )
-
-
+    if (!securityPassed){
+        viewModel.fingerprint()
+        Box(modifier = Modifier.fillMaxSize().background(Color.Black))
+    }else{
+        FloatingAddButton(onButtonClick = { viewModel.onDialogIsOpenChange(true) }, viewModel)
+        ListOfNotes(
+            notes,
+            viewModel,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        )
+    }
 }
-
 
 @Composable
 fun FloatingAddButton(

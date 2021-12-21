@@ -3,7 +3,6 @@ package com.ugisozols.biometricnoteapp.util
 import android.Manifest
 import android.app.KeyguardManager
 import android.content.Context
-import android.content.UriMatcher
 import android.content.pm.PackageManager
 import android.hardware.biometrics.BiometricPrompt
 import android.os.Build
@@ -12,11 +11,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import com.ugisozols.biometricnoteapp.util.Constants.FINGERPRINT_DIALOG_SUBTITLE
 import com.ugisozols.biometricnoteapp.util.Constants.FINGERPRINT_DIALOG_TITLE
-import java.util.concurrent.Executor
 
 @RequiresApi(Build.VERSION_CODES.R)
 fun launchBiometricFingerprintReader(
-    cancelationSignal: () -> CancellationSignal,
+    cancellationSignal: () -> CancellationSignal,
     authenticationSucceeded: () -> Unit,
     authenticationError: () -> Unit,
     context: Context
@@ -26,12 +24,12 @@ fun launchBiometricFingerprintReader(
             .setTitle(FINGERPRINT_DIALOG_TITLE)
             .setSubtitle(FINGERPRINT_DIALOG_SUBTITLE)
             .setConfirmationRequired(false)
-            .setNegativeButton("", context.mainExecutor, { _, _ ->
+            .setNegativeButton("Back", context.mainExecutor, { _, _ ->
 
             })
             .build()
         biometricPrompt.authenticate(
-            cancelationSignal(),
+            cancellationSignal(),
             context.mainExecutor,
             authenticationCallback(authenticationSucceeded, authenticationError)
         )

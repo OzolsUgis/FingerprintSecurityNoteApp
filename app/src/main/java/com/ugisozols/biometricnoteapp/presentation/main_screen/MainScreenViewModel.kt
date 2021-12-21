@@ -1,5 +1,10 @@
 package com.ugisozols.biometricnoteapp.presentation.main_screen
 
+import android.app.Application
+import android.os.Build
+import android.os.CancellationSignal
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -7,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ugisozols.biometricnoteapp.data.entities.Note
 import com.ugisozols.biometricnoteapp.domain.repository.NoteRepository
+import com.ugisozols.biometricnoteapp.util.launchBiometricFingerprintReader
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -14,9 +20,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
-    private val noteRepository: NoteRepository
+    private val noteRepository: NoteRepository,
+    private val context: Application
 ) : ViewModel() {
 
+    private var cancellationSignal: CancellationSignal? = null
 
     var addNewNoteDialogIsOpen by mutableStateOf(false)
         private set
@@ -26,6 +34,36 @@ class MainScreenViewModel @Inject constructor(
 
     var noteContent by mutableStateOf("")
         private set
+
+    var hasFingerprintSecurityPassed by mutableStateOf(false)
+    private set
+
+
+    @RequiresApi(Build.VERSION_CODES.R)
+    fun fingerprint() = viewModelScope.launch {
+        launchBiometricFingerprintReader(
+            { getCancelationSignal() },
+            authenticationSucceeded = {
+                hasFingerprintSecurityPassed = true
+            },
+            authenticationError = {
+                hasFingerprintSecurityPassed = false
+            },
+            context
+        )
+    }
+
+
+
+
+    private fun getCancelationSignal() : CancellationSignal {
+        cancellationSignal = CancellationSignal()
+        cancellationSignal?.setOnCancelListener {
+            Log.d("MY_APP_TAG","Authentication cancelation signal")
+        }
+
+        return cancellationSignal as CancellationSignal
+    }
 
 
     fun onDialogIsOpenChange(isDialogVisible: Boolean) {
