@@ -1,6 +1,7 @@
 package com.ugisozols.biometricnoteapp.di
 
 import android.content.Context
+import androidx.core.content.PermissionChecker
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ugisozols.biometricnoteapp.data.NoteDao
@@ -19,18 +20,19 @@ import javax.inject.Singleton
 object AppModule {
 
 
-    @Provides
+
     @Singleton
+    @Provides
     fun provideNoteDatabase(
         @ApplicationContext context: Context
     ) = Room.databaseBuilder(
         context,
         NoteDatabase::class.java,
         DATABASE_NAME
-    )
+    ).build()
 
-    @Provides
-    @Singleton
+   @Singleton
+   @Provides
     fun provideNoteDao(database : NoteDatabase) = database.noteDao()
 
 

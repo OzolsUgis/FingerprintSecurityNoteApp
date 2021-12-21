@@ -4,6 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.ugisozols.biometricnoteapp.data.NoteDao
 import com.ugisozols.biometricnoteapp.data.entities.Note
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
 class NoteRepository @Inject constructor(
@@ -18,11 +22,11 @@ class NoteRepository @Inject constructor(
         noteDao.deleteNoteById(noteId)
     }
 
-    fun getAllNotes() : List<Note>{
+    fun getAllNotes() : Flow<List<Note>> {
         return noteDao.getAllNotes()
     }
 
-    fun getNoteById(noteId : String)  :Note{
+    suspend fun getNoteById(noteId : String)  :Note{
         return noteDao.getNoteById(noteId = noteId)
     }
 }
