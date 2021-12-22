@@ -124,14 +124,13 @@ fun MainScreen(
 }
 ```
 
+ ## Contacts
 
-   ## Contacts
-
-     Ugis Ozols - ugisozols.97@gmail.com 
+   Ugis Ozols - ugisozols.97@gmail.com 
      
-     LinkedIn - www.linkedin.com/in/uģis-ozols-2192a8226
+   LinkedIn - www.linkedin.com/in/uģis-ozols-2192a8226
 
-     Project Link - https://github.com/OzolsUgis/FingerprintSecurityNoteApp 
+   Project Link - https://github.com/OzolsUgis/FingerprintSecurityNoteApp 
 
 
 
