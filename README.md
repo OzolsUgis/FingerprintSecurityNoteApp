@@ -126,7 +126,7 @@ fun MainScreen(
 
  ## Contacts
 
-   Ugis Ozols - ugisozols.97@gmail.com 
+   Ugis Ozols - ozols.ugis@outlook.com
      
    LinkedIn - www.linkedin.com/in/uģis-ozols-2192a8226
 
